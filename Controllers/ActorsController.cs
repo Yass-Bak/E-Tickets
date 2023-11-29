@@ -1,4 +1,5 @@
 ﻿using E_Tickets.Data;
+using E_Tickets.Data.Services;
 using E_Tickets.Models;
 using eTickets.Data;
 using Microsoft.AspNetCore.Authorization;
@@ -13,20 +14,33 @@ namespace eTickets.Controllers
 {
     public class ActorsController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly IActorService _service;
+            
 
-        public ActorsController(AppDbContext context)
+        public ActorsController(IActorService service)
         {
-            _context = context;
+            _service = service;
 
         }
         public IActionResult Index()
         {
-            var data = _context.Actors.ToList();
+            var data = _service.GetAll();
             return View(data);
         }
-
-
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create([Bind("FullName,ProfilePictureUrl,Bio")] Actor actor)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(actor);
+            }
+            _service.Add(actor);
+            return RedirectToAction(nameof(Index));
+        }
 
     }
 }

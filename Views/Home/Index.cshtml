@@ -3,9 +3,9 @@
 }
 
 @{
-    var imagePath1 = Url.Content("~/Data/Images/1.png");
-    var imagePath2 = Url.Content("~/Data/Images/2.png");
-   
+    var imagePath1 = Url.Content("~/Images/1.png");
+    var imagePath2 = Url.Content("~/Images/2.png");
+
 }
 
 <div class="container">
@@ -16,7 +16,7 @@
 
     <div class="row mt-5">
         <div class="col-md-6">
-            <img src="@Url.Content("~/Data/Images/1.png")" alt="Image du Cinéma 1" class="img-fluid rounded">
+            <img src="@imagePath1" alt="Image du Cinéma 1" class="img-fluid rounded">
         </div>
 
         <div class="col-md-6">
@@ -37,7 +37,7 @@
         </div>
 
         <div class="col-md-6">
-            <img src="@Url.Content("~/Data/Images/2.png")" alt="Image du Cinéma 2" class="img-fluid rounded">
+            <img src="@imagePath2" alt="Image du Cinéma 2" class="img-fluid rounded">
         </div>
     </div>
 
@@ -46,5 +46,5 @@
         <a asp-area="" asp-controller="Movies" asp-action="Index" class="btn btn-primary">Commencer</a>
     </div>
 
-    
+
 </div>
