@@ -26,7 +26,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Movies" asp-action="Index"><i class="bi bi-film"></i> Movies</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Movies" asp-action="Index"><i class="bi bi-film"></i> Films</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-controls="navbarSupportedContent">
@@ -48,7 +48,7 @@
             </div>
         </nav>
     </header>
-    <div class="container-fluid">
+    <div class="accordion-item">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -56,7 +56,7 @@
 
  <footer class="bg-light text-center text-lg-start">
   <div class="text-center p-3">
-    © 2023 E-Tikets tous droits réservés
+    © 2023 E-Tickets tous droits réservés
   </div>
 </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
