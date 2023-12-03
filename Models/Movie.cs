@@ -1,13 +1,14 @@
-﻿using E_Tickets.Data.Enums;
+﻿using E_Tickets.Data.Base;
+using E_Tickets.Data.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace E_Tickets.Models
 {
-    public class Movie
+    public class Movie : IEntityBase
     {
         [Key]
-       public int Id { get; set; }
+        public int Id { get; set; }
         [Display(Name = "Titre")]
         public string Name { get; set; }
         [Display(Name = "Description")]
@@ -15,7 +16,7 @@ namespace E_Tickets.Models
         [Display(Name = "Prix")]
         public double Price { get; set; }
         [Display(Name = "Poster")]
-        public string ImageUrl { get; set;}
+        public string ImageUrl { get; set; }
         [Display(Name = "Date Début")]
         public DateTime StartDate { get; set; }
         [Display(Name = "Date Fin")]
