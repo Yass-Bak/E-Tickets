@@ -1,13 +1,13 @@
 ﻿@model Cinema
 
 @{
-    ViewData["Title"] = "Ajouter nouveau Acteur ";
+    ViewData["Title"] = "Ajouter nouveau Cinema ";
 }
 
 <div class="row text">
     <div class="col-md-8 offset-2">
         <p>
-            <h1>Ajouter nouveau Acteur </h1>
+            <h1>Ajouter nouveau Cinema </h1>
         </p>
         <div class="row">
             <div class="col-md-8 offset-2">
@@ -36,6 +36,7 @@
                     <div class="form-group">
                         <input type="submit" value="Ajouter" class="btn btn-outline-success float-right" />
                         <a class="btn btn-outline-secondary" asp-action="Index">Tous Afficher</a>
+                        <span class="text-danger">@ViewBag.Message</span>
                     </div>
                 </form>
             </div>

@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="form-group">
-                        <form action="Delete">
+                    <form asp-action="Delete" asp-controller="Cinemas">
                             <input type="hidden" asp-for="Id"/>
                         <input type="submit" value="Confirm" class="btn btn-danger float-right" />
                         <a class="btn btn-group text-black" asp-action="Index">Tous Afficher</a>

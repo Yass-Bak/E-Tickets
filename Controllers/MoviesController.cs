@@ -6,7 +6,6 @@ namespace E_Tickets.Controllers
     public class MoviesController : Controller
     {
         private readonly IMoviesService _service;
-
         public MoviesController(IMoviesService service)
         {
             _service = service;

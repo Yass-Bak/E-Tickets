@@ -34,14 +34,20 @@ namespace E_Tickets.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("ProfilePictureUrl,FullName,Bio")] Producer producer)
+        public async Task<IActionResult> Create(Producer producer)
         {
-            if (!ModelState.IsValid)
+            var data = await _service.GetAllAsync();
+            if (data.Where(x => x.FullName == producer.FullName).Count() > 0)
             {
-                return View(producer);
+                ViewBag.Message = "Producteur existe deja";
+                return View();
             }
-            await _service.AddAsync(producer);
-            return RedirectToAction(nameof(Index));
+            else
+            {
+                await _service.AddAsync(producer);
+                return RedirectToAction(nameof(Index));
+            }
+
         }
         public async Task<IActionResult> Edit(int id)
         {
@@ -50,9 +56,9 @@ namespace E_Tickets.Controllers
             return View(ProducerDetails);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, [Bind("ProfilePictureUrl,FullName,Bio")] Producer producer)
+        public async Task<IActionResult> Edit(int id, Producer producer)
         {
-            if (!ModelState.IsValid) return View(producer);
+
             if (id == producer.Id)
             {
                 await _service.UpdateAsync(id, producer);

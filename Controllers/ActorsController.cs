@@ -1,21 +1,13 @@
-﻿using E_Tickets.Data;
-using E_Tickets.Data.Services;
+﻿using E_Tickets.Data.Services;
 using E_Tickets.Models;
-using eTickets.Data;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace eTickets.Controllers
 {
     public class ActorsController : Controller
     {
         private readonly IActorService _service;
-            
+
 
         public ActorsController(IActorService service)
         {
@@ -24,7 +16,7 @@ namespace eTickets.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var data =await  _service.GetAllAsync();
+            var data = await _service.GetAllAsync();
             return View(data);
         }
         public IActionResult Create()
@@ -32,40 +24,43 @@ namespace eTickets.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("FullName,ProfilePictureUrl,Bio")] Actor actor)
+        public async Task<IActionResult> Create(Actor actor)
         {
-                if (!ModelState.IsValid)
-                {
-                    return View(actor);
-                }
-               await  _service.AddAsync(actor);
+            var data = await _service.GetAllAsync();
+            if (data.Where(x => x.FullName == actor.FullName).Count() > 0)
+            {
+                ViewBag.Message = "L'acteur existe deja";
+                return View();
+            }
+            else
+            {
+                await _service.AddAsync(actor);
                 return RedirectToAction(nameof(Index));
+            }
         }
-        public async Task<IActionResult> Details (int id)
-        {
-            var actorDetails =await _service.GetByIdAsync(id);
-            if (actorDetails == null) return View("Vide");
-                    return View(actorDetails);
-        }
-        public async  Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Details(int id)
         {
             var actorDetails = await _service.GetByIdAsync(id);
             if (actorDetails == null) return View("Vide");
             return View(actorDetails);
         }
-        [HttpPost]
-        public async Task<IActionResult> Edit(int id, [Bind("FullName,ProfilePictureUrl,Bio")] Actor actor)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (!ModelState.IsValid)
-            {
-               return View(actor);
-            }
+            var actorDetails = await _service.GetByIdAsync(id);
+            if (actorDetails == null) return View("Vide");
+            return View(actorDetails);
+        }
+        [HttpPost, ActionName("Edit")]
+        public async Task<IActionResult> Edit(int id, Actor actor)
+        {
+
             if (id == actor.Id)
             {
                 await _service.UpdateAsync(id, actor);
                 return RedirectToAction(nameof(Index));
             }
             return View(actor);
+
         }
         public async Task<IActionResult> Delete(int id)
         {
@@ -73,7 +68,7 @@ namespace eTickets.Controllers
             if (actorDetails == null) return View("Vide");
             return View(actorDetails);
         }
-        [HttpPost , ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var actorDetails = await _service.GetByIdAsync(id);

@@ -26,14 +26,20 @@ namespace E_Tickets.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Logo,Name,Description")] Cinema cinema)
+        public async Task<IActionResult> Create(Cinema cinema)
         {
-            if (!ModelState.IsValid)
+            var data = await _service.GetAllAsync();
+            if (data.Where(x => x.Name == cinema.Name).Count() > 0)
             {
-                return View(cinema);
+                ViewBag.Message = "Cinema existe deja";
+                return View();
             }
-            await _service.AddAsync(cinema);
-            return RedirectToAction(nameof(Index));
+            else
+            {
+                await _service.AddAsync(cinema);
+                return RedirectToAction(nameof(Index));
+            }
+
         }
         public async Task<IActionResult> Details(int id)
         {
@@ -51,9 +57,9 @@ namespace E_Tickets.Controllers
         }
         //mettre a jourr  les cinemas
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Logo,Name,Description")] Cinema cinema)
+        public async Task<IActionResult> Edit(int id, Cinema cinema)
         {
-            if (!ModelState.IsValid) return View(cinema);
+
             await _service.UpdateAsync(id, cinema);
             return RedirectToAction(nameof(Index));
         }

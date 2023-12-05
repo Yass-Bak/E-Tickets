@@ -5,5 +5,6 @@ namespace E_Tickets.Data.Services
 {
     public interface IMoviesService : IEntityBaseRepository<Movie>
     {
+
     }
 }
