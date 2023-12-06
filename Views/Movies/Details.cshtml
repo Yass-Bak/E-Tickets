@@ -1,0 +1,49 @@
+﻿@* Définir le Model *@
+@model Movie
+@* Définir le data *@
+@{
+    ViewData["Title"] = "Deatil du Film";
+}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card text-center">
+                <img class="card-img-top mx-auto" src="@Model.ImageUrl" alt="Card image cap" style="width: 50%; height:50% ">
+
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Name</h5>
+                    <p class="card-text">@Model.Description.</p>
+
+                    <hr />
+
+                    <h6 class="mb-3">Acteurs</h6>
+                    <div class="row">
+                        @foreach (var actor in Model.Actors_Movies)
+                        {
+                            <div class="col-md-3">
+                                <div class="flex-column text-center">
+                                    <img class="border-info rounded-circle" src="@actor.Actor.ProfilePictureUrl" style="max-width: 50px" />
+                                    <a asp-controller="Actors" asp-action="Details" asp-route-id="@actor.ActorId">@actor.Actor.FullName</a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Catégorie: @Model.MovieCategory</li>
+                        <li class="list-group-item">Date de démarrage: @Model.StartDate.ToString("dd MMM yy")</li>
+                        <li class="list-group-item">Date de clôture: @Model.EndDate.ToString("dd MMM yy")</li>
+                    </ul>
+
+                    <div class="card-body">
+                        <a class="btn btn-success text-white @((DateTime.Now > Model.EndDate) ? "disabled" : "")">
+                            <i class="bi bi-cart-plus"></i> Ajouter au panier (Prix @Model.Price TND)
+                        </a>
+                        <a class="btn btn-outline-primary float-right" asp-controller="Movies" asp-action="Index">Revenir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

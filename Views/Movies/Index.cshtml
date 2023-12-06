@@ -52,7 +52,7 @@
                             <p class="card-text ">
                                 <table class="table">
                                     <tr>
-                                <a class="btn btn-outline-primary float-right" asp-action="Details" asp-route-id="@item.Id">
+                                <a class="btn btn-outline-primary float-right" asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id">
                                     <i class="bi bi-eye-fill"></i> Afficher les détails
                                 </a>
                               </tr>
@@ -71,3 +71,4 @@
         </div>
     }
 </div>
+@await Html.PartialAsync("_CreateItem", "Movies")
