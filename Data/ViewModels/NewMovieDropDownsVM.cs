@@ -14,5 +14,6 @@ namespace E_Tickets.Data.ViewModels
         public List<Producer> Producers { get; set; }
         public List<Cinema> Cinemas { get; set; }
         public List<Actor> Actors { get; set; }
+
     }
 }

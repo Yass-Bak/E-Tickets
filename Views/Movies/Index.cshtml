@@ -1,4 +1,4 @@
-﻿@* Définir le Model *@
+﻿  @* Définir le Model *@
 @model IEnumerable<Movie>
 @* Définir le data *@
 @{
@@ -15,6 +15,7 @@
                             <p class="card-text">
                                 <h5 class="card-title">
                                     @item.Name
+                                    <a class="text-white float-right" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
                                 </h5>
                             </p>
                         </div>
@@ -57,8 +58,7 @@
                                 </a>
                               </tr>
                                     <tr>
-                                <a class="btn btn-success text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")"
-                                   >
+                                        <a class="btn btn-success text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")" asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@item.Id">
                                     <i class="bi bi-cart-plus"></i> Ajouter Au Panier (Prix @item.Price TND)
                                 </a>
                                 </tr>
@@ -71,4 +71,6 @@
         </div>
     }
 </div>
-@await Html.PartialAsync("_CreateItem", "Movies")
+<div style="position : fixed ; right:25px ; bottom: 25px ;" class="text-white">
+    <a asp-controller="Movies" asp-action="Create" class="btn btn-success"> <i class="bi bi-plus-circle"></i> Ajouter </a>
+</div>

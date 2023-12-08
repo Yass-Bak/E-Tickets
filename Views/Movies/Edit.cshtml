@@ -1,16 +1,16 @@
 ﻿@model NewMovieVM
 @using E_Tickets.Data.Enums
 @{
-    ViewData["Titre"] = "Ajouter un Film";
+    ViewData["Titre"] = "Modifier un Film";
 }
 <div class="row">
     <div class="col-md-8 offset-2">
         <p>
-            <h4>Ajouter un Film</h4>
+            <h4>Modifier un Film</h4>
         </p>
         <div class="row">
             <div class="col-md-8 offset-2">
-                <form asp-action="Create">
+                <form asp-action="Edit">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <div class="row">
@@ -77,7 +77,7 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="submit" value="Ajouter" class="btn btn-outline-success float-right" />
+                        <input type="submit" value="Enregistrer" class="btn btn-outline-success float-right" />
                         <a class="btn btn-outline-secondary" asp-action="Index">Tout afficher</a>
                     </div>
                     <div class="form-group">
@@ -94,6 +94,11 @@
 
 @section Scripts {
     <script>
+        $(document).ready(fucntion(){
+            var output = document.getElementById("ImageUrlPreview");
+            output.src = $("#ImageURL").val();
+        });
+
         $("#ImageURL").on("change", function () {
             var output = document.getElementById("ImageUrlPreview");
             output.src = $(this).val();

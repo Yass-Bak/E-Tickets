@@ -1,4 +1,5 @@
 using E_Tickets.Data;
+using E_Tickets.Data.Cart;
 using E_Tickets.Data.Services;
 using eTickets.Data;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +9,10 @@ builder.Services.AddScoped<IActorService, ActorsService>();
 builder.Services.AddScoped<IProducersService, ProducersService>();
 builder.Services.AddScoped<ICinemasService, CinemasService>();
 builder.Services.AddScoped<IMoviesService, MoviesService>();
-
+builder.Services.AddScoped<IOrdersService, OrdersService>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
+builder.Services.AddSession();
 //Register services here
 
 
@@ -31,12 +35,12 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseSession();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Movies}/{action=Index}/{id?}");
 //SeedDatabase
 AppDbInitializer.Seed(app);
 

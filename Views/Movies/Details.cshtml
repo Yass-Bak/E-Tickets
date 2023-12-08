@@ -36,7 +36,7 @@
                     </ul>
 
                     <div class="card-body">
-                        <a class="btn btn-success text-white @((DateTime.Now > Model.EndDate) ? "disabled" : "")">
+                        <a class="btn btn-success text-white @((DateTime.Now > Model.EndDate) ? "disabled" : "")" asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@Model.Id">
                             <i class="bi bi-cart-plus"></i> Ajouter au panier (Prix @Model.Price TND)
                         </a>
                         <a class="btn btn-outline-primary float-right" asp-controller="Movies" asp-action="Index">Revenir</a>
