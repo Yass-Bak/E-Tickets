@@ -18,6 +18,14 @@ namespace E_Tickets.Controllers
             _shoppingCart = shoppingCart;
             _ordersService = ordersService;
         }
+        public async Task<IActionResult> Index()
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userRole = User.FindFirstValue(ClaimTypes.Role);
+
+            var orders = await _ordersService.GetOrdersByUserIdAndRoleAsync(userId, userRole);
+            return View(orders);
+        }
         public IActionResult ShoppingCart()
         {
             var items = _shoppingCart.GetShoppingCartItems();

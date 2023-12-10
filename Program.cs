@@ -1,7 +1,9 @@
 using E_Tickets.Data;
 using E_Tickets.Data.Cart;
 using E_Tickets.Data.Services;
-using eTickets.Data;
+using E_Tickets.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,8 +14,16 @@ builder.Services.AddScoped<IMoviesService, MoviesService>();
 builder.Services.AddScoped<IOrdersService, OrdersService>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
+
+//Authentification Services
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddMemoryCache();
 builder.Services.AddSession();
-//Register services here
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    //Password long //coockies ectt 
+});
 
 
 var connectionstring = builder.Configuration.GetConnectionString("conn");
@@ -36,12 +46,23 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseSession();
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Movies}/{action=Index}/{id?}");
-//SeedDatabase
-AppDbInitializer.Seed(app);
+//Remplir La base 
+/*try
+{
+    AppDbInitializer.Seed(app);
+    AppDbInitializer.SeedUsersAndRolesAsync(app);
+
+}
+catch (Exception e)
+{
+    Console.WriteLine(e.ToString());
+}*/
 
 app.Run();

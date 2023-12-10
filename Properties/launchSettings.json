@@ -18,7 +18,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "use64Bit": true
+      "use64Bit": true,
+      "sqlDebugging": true
     },
     "WSL": {
       "commandName": "WSL2",
