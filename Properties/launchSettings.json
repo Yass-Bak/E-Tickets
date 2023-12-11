@@ -2,9 +2,8 @@
   "profiles": {
     "E_Tickets": {
       "commandName": "Project",
-      "workingDirectory": "C:\\Users\\souna\\source\\repos\\E-Tickets",
+      "launchUrl": "Home",
       "launchBrowser": true,
-      "launchUrl": "Movies",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

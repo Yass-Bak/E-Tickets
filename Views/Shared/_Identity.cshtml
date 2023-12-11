@@ -5,6 +5,7 @@
     <a class="btn btn-outline-success my-2 my-sm-0" asp-controller="Account" asp-action="Login">
         <i class="bi bi-box-arrow-in-right"></i> Se connecter
     </a>
+    
     <span style="padding: 5px;"></span>
 
     <a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Account" asp-action="Register">
@@ -16,26 +17,23 @@ else
 
     @*Section du profil de l'utilisateur*@
     <div class="dropdown">
-        <button class="btn btn-outline-success dropdown-toggle" type="button" id="profile-btn" data-toggle="dropdown"
-                aria-expanded="false">
-            <i class="bi bi-person-badge"></i> Bonjour @UserManager.GetUserName(User)
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="profile-btn">
-            <li>
-                <a class="dropdown-item" asp-controller="Orders" asp-action="Index">
-                    <i class="bi bi-list"></i> Commandes
-                </a>
-            </li>
-
-            @if (User.IsInRole("Admin"))
-            {
-                <li>
-                    <a class="dropdown-item" asp-controller="Account" asp-action="Users">
-                        <i class="bi bi-people"></i> Utilisateurs
-                    </a>
-                </li>
-            }
-        </ul>
+        <ul class="navbar-nav flex-grow-1">
+            @if (User.Identity.IsAuthenticated)
+                                {
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-controls="navbarSupportedContent">
+                                            <i class="bi bi-person-fill"></i> Bonjour @UserManager.GetUserName(User)</a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" asp-controller="Orders" asp-action="Index"><i class="bi bi-box"></i> Commandes</a>
+                                           @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                           {
+                                               <a class="dropdown-item" asp-controller="Account" asp-action="Users"><i class="bi bi-people-fill"></i> Utilisateurs</a>
+                                           }
+                                        </div>
+                                    </li>
+                                }
+        
+                                </ul>
     </div>
     <span style="padding: 5px;"></span>
     <form asp-controller="Account" asp-action="Logout">

@@ -21,8 +21,8 @@ builder.Services.AddMemoryCache();
 builder.Services.AddSession();
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    //Password long //coockies ectt 
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 });
 
 
@@ -53,16 +53,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Movies}/{action=Index}/{id?}");
-//Remplir La base 
-/*try
-{
-    AppDbInitializer.Seed(app);
-    AppDbInitializer.SeedUsersAndRolesAsync(app);
 
-}
-catch (Exception e)
-{
-    Console.WriteLine(e.ToString());
-}*/
+
+await AppDbInitializer.SeedUsersAndRolesAsync(app);
 
 app.Run();

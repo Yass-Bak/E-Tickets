@@ -20,6 +20,11 @@ namespace E_Tickets.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            if (User.FindFirstValue(ClaimTypes.Email) is null)
+            {
+                return RedirectToAction("Account", "Login");
+            }
+
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             string userRole = User.FindFirstValue(ClaimTypes.Role);
 
@@ -64,6 +69,11 @@ namespace E_Tickets.Controllers
 
         public async Task<IActionResult> CompleteOrder()
         {
+            if (User.FindFirstValue(ClaimTypes.Email) is null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
             var items = _shoppingCart.GetShoppingCartItems();
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             string userEmailAddress = User.FindFirstValue(ClaimTypes.Email);
