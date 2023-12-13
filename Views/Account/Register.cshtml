@@ -64,8 +64,11 @@
             </div>
         </div>
     </div>
-</div>*@
-<!-- Section: Design Block -->
+</div>
+*@
+
+
+    <!-- Section: Design Block -->
 
   <style>
     .cascading-right {
@@ -88,18 +91,17 @@
             backdrop-filter: blur(30px);
             ">
           <div class="card-body p-5 shadow-5 text-center">
-                    <h2 class="fw-bold mb-5">S'inscrire maintenant</h2>
-                    <form asp-action="Register">
+              <h2 class="fw-bold mb-5">S'inscrire maintenant</h2>
+              <form asp-action="Register">
+              <div asp-validation-summary="ModelOnly" class="text-danger"></div>
               <!-- 2 column grid layout with text inputs for the first and last names -->
               <div class="row">
-                
-                                <div class="form-outline mb-4">
+              <div class="form-outline mb-4">
                     <label asp-for="FullName" class="form-label" for="form3Example1">Nom Prénom</label>
                     <input asp-for="FullName" type="text" id="form3Example1" class="form-control" />
                     <span asp-validation-for="FullName" class="text-danger"></span>
-                                
-                  </div>
-                
+              </div>
+
               </div>
 
               <!-- Email input -->
@@ -107,30 +109,24 @@
                 <label asp-for="EmailAddress" class="form-label" for="form3Example3">Adresse Mail</label>
                 <input asp-for="EmailAddress"  type="email" id="form3Example3" class="form-control" />
                 <span asp-validation-for="EmailAddress" class="text-danger"></span>
-                            
+
               </div>
 
               <!-- Password input -->
               <div class="form-outline mb-4">
                 <label asp-for="Password" class="form-label" for="form3Example4">Mot de passe</label>
                 <input asp-for="Password"  type="password" id="form3Example4" class="form-control" />
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                           
+                <span asp-validation-for="Password" class="text-danger"></span>
               </div>
                         <!-- Password input conff -->
-                        <div class="form-outline mb-4">
-                            <label asp-for="ConfirmPassword" class="form-label" for="form3Example4">Confirmer le mot de passe</label>
-                            <input asp-for="ConfirmPassword" type="password" id="form3Example4" class="form-control" />
-                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-
-                        </div>
+              <div class="form-outline mb-4">
+                 <label asp-for="ConfirmPassword" class="form-label" for="form3Example4">Confirmer le mot de passe</label>
+                 <input asp-for="ConfirmPassword" type="password" id="form3Example4" class="form-control" />
+                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+              </div>
               <!-- Submit button -->
-              <button type="submit" class="btn btn-primary btn-block mb-4">
-                            S'inscrire
-              </button>
-                        <button class="btn btn-secondary btn-block mb-4" asp-controller="Movies" asp-action="Index">Annuler</button>
-              <!-- Register buttons -->
-             
+              <button type="submit" class="btn btn-primary btn-block mb-4">S'inscrire</button>
+              <button class="btn btn-secondary btn-block mb-4" asp-controller="Movies" asp-action="Index">Annuler</button>
             </form>
           </div>
         </div>
@@ -144,3 +140,4 @@
   </div>
   <!-- Jumbotron -->
 <!-- Section: Design Block -->
+

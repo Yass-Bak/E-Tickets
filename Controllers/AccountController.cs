@@ -1,11 +1,11 @@
-﻿using System.Security.Claims;
-using E_Tickets.Data;
+﻿using E_Tickets.Data;
 using E_Tickets.Data.Static;
 using E_Tickets.Data.ViewModels;
 using E_Tickets.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace E_Tickets.Controllers
 {
@@ -14,7 +14,7 @@ namespace E_Tickets.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly AppDbContext _context;
-        
+
         private ClaimsPrincipal _claimsPrincipal;
 
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AppDbContext context)
@@ -23,8 +23,8 @@ namespace E_Tickets.Controllers
             _signInManager = signInManager;
             _context = context;
         }
-        
-        
+
+
         public async Task<IActionResult> Users()
         {
             var claim = _signInManager.Context.User;
@@ -61,7 +61,7 @@ namespace E_Tickets.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, true, false);
                     if (result.Succeeded)
                     {
-                        await _signInManager.SignInAsync(user,true);
+                        await _signInManager.SignInAsync(user, true);
                         return RedirectToAction("Index", "Movies");
                     }
                 }
@@ -79,13 +79,16 @@ namespace E_Tickets.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM registerVM)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(registerVM);
+            }
             var user = await _userManager.FindByEmailAsync(registerVM.EmailAddress);
             if (user != null)
             {
                 TempData["Error"] = "Cette adresse électronique est déjà utilisée";
                 return View(registerVM);
             }
-
             var newUser = new ApplicationUser()
             {
                 FullName = registerVM.FullName,
@@ -93,10 +96,16 @@ namespace E_Tickets.Controllers
                 UserName = registerVM.EmailAddress
             };
             var newUserResponse = await _userManager.CreateAsync(newUser, registerVM.Password);
+            if (!newUserResponse.Succeeded)
+            {
+                foreach (var error in newUserResponse.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+                return View(registerVM);
+            }
 
-            if (newUserResponse.Succeeded)
-                await _userManager.AddToRoleAsync(newUser, UserRoles.User);
-
+            await _userManager.AddToRoleAsync(newUser, UserRoles.User);
             return View("RegisterCompleted");
         }
 
