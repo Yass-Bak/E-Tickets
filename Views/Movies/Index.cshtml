@@ -1,40 +1,92 @@
-﻿  @* Définir le Model *@
-@model IEnumerable<Movie>
-@* Définir le data *@
+﻿@model IEnumerable<Movie>
 @{
     ViewData["Title"] = "Liste des Films";
 }
+    @*  <div class="col-md-4 col-xs-6 border-primary mb-3">
+<div class="card mb-3" style="max-width: 540px;">
+<div class="row g-0">
+<div class="col-md-12">
+<div class="card-header text-white bg-primary">
+<p class="card-text">
+<h5 class="card-title">
+@item.Name
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+<a class="text-white float-right" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+}
+</h5>
+</p>
+</div>
+</div>
+<div class="col-md-6">
+<img src="@item.ImageUrl" width="100%" alt="@item.Name">
+</div>
+<div class="col-md-6">
+<div class="card-body ">
+<p class="card-text">@item.Description</p>
+<p class="card-text"><b>Cinema: </b>@item.Cinema.Name</p>
+<p class="card-text"><b>Catégorie: </b>@item.MovieCategory</p>
+<p class="card-text"><b>date de démarrage: </b>@item.StartDate.ToString("dd MMM yy")</p>
+<p class="card-text"><b>date de clôture: </b>@item.EndDate.ToString("dd MMM yy")</p>
+<p class="card-text">
+<b>Status: </b>
+@if (DateTime.Now >= item.StartDate && DateTime.Now <= item.EndDate)
+{
+<span class="badge bg-success text-white">DISPONIBLE</span>
+}
+else if (DateTime.Now > item.EndDate)
+{
+<span class="badge bg-danger text-white">EXPIRE</span>
+}
+else
+{
+<span class="badge bg-primary text-white">A VENIR</span>
+}
+</p>
+
+</div>
+</div>
+<div class="col-md-12">
+<div class="card-footer  ">
+<p class="card-text ">
+<table class="table">
+<tr>
+<a class="btn btn-outline-primary float-right" asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id">
+<i class="bi bi-eye-fill"></i> Afficher les détails
+</a>
+</tr>
+<tr>
+<a class="btn btn-success text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")" asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@item.Id">
+<i class="bi bi-cart-plus"></i> Ajouter Au Panier (Prix @item.Price TND)
+</a>
+</tr>
+</table >
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>*@    
 <div class="row">
     @foreach (var item in Model)
     {
-        <div class="col-md-4 col-xs-6 border-primary mb-3">
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-md-12">
-                        <div class="card-header text-white bg-secondary">
-                            <p class="card-text">
-                                <h5 class="card-title">
-                                    @item.Name
-                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                                    {
-                                    <a class="text-white float-right" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
-                                    }
-                                </h5>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <img src="@item.ImageUrl" width="100%" alt="@item.Name">
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card-body ">
-                            <p class="card-text">@item.Description</p>
-                            <p class="card-text"><b>Cinema: </b>@item.Cinema.Name</p>
-                            <p class="card-text"><b>Catégorie: </b>@item.MovieCategory</p>
-                            <p class="card-text"><b>date de démarrage: </b>@item.StartDate.ToString("dd MMM yy")</p>
-                            <p class="card-text"><b>date de clôture: </b>@item.EndDate.ToString("dd MMM yy")</p>
-                            <p class="card-text">
-                                <b>Status: </b>
+        <div class="px-4">
+            <div class="card mb-4 card-hover">
+                <div class="row">
+                    <a class="col-12 col-md-12  col-lg-3 bg-cover rounded-start"
+                       style="background-image: url('@item.ImageUrl'); background-size: contain; background-position: center;" href="@item.ImageUrl">
+                    </a>
+                    <div class="col-lg-9 col-md-12 col-12">
+                        <!-- Card Body -->
+                        <div class="card-body">
+                            <h3 class="mb-2 text-truncate-line-2">
+                                <a >@item.Name</a>
+                                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                {
+                                    <a class="text-black float-right" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                                }
+                            </h3>
+                            <ul class="mb-5 list-inline">
                                 @if (DateTime.Now >= item.StartDate && DateTime.Now <= item.EndDate)
                                 {
                                     <span class="badge bg-success text-white">DISPONIBLE</span>
@@ -47,26 +99,38 @@
                                 {
                                     <span class="badge bg-primary text-white">A VENIR</span>
                                 }
-                            </p>
-
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="card-footer  ">
-                            <p class="card-text ">
-                                <table class="table">
-                                    <tr>
+                                <li class="list-inline-item">
+                                    <i class="mdi mdi-clock-time-four-outline text-muted me-1"></i><b>date de démarrage: </b>@item.StartDate.ToString("dd MMM yy")
+                                </li>
+                                <li class="list-inline-item">
+                                    <i class="mdi mdi-clock-time-four-outline text-muted me-1"></i><b>date de clôture: </b>@item.EndDate.ToString("dd MMM yy")
+                                </li>
+                                <li class="list-inline-item">
+                                    
+                                    <span class="fs-6 text-muted">Catégorie: @item.MovieCategory</span>
+                                    
+                                    
+                                </li>
+                            </ul>
+                            <div class="col ms-2">
                                 <a class="btn btn-outline-primary float-right" asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id">
                                     <i class="bi bi-eye-fill"></i> Afficher les détails
                                 </a>
-                              </tr>
-                                    <tr>
-                                        <a class="btn btn-success text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")" asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@item.Id">
+                                @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                                {
+                                <a class="btn btn-success text-white float-right @(DateTime.Now > item.EndDate ? "disabled" : "")" asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@item.Id">
                                     <i class="bi bi-cart-plus"></i> Ajouter Au Panier (Prix @item.Price TND)
                                 </a>
-                                </tr>
-                                    </table >
-                            </p>
+                                }
+                                <div class="col ms-2">
+                                    
+                                </div>
+                                <div class="col-auto">
+                                    <a href="#" class="text-muted bookmark">
+                                        <i class="fe fe-bookmark"></i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -74,9 +138,7 @@
         </div>
     }
 </div>
-@*<div style="position : fixed ; right:25px ; bottom: 25px ;" class="text-white">
-    <a asp-controller="Movies" asp-action="Create" class="btn btn-success"> <i class="bi bi-plus-circle"></i> Ajouter </a>
-</div>*@
+
 @{
     try
     {

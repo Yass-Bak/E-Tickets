@@ -2,9 +2,9 @@
 @model Movie
 @* Définir le data *@
 @{
-    ViewData["Title"] = "Deatil du Film";
+    ViewData["Title"] = "Detail du Film";
 }
-<div class="container">
+<div class="container accordion-body">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card text-center">
@@ -36,9 +36,12 @@
                     </ul>
 
                     <div class="card-body">
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                        {
                         <a class="btn btn-success text-white @((DateTime.Now > Model.EndDate) ? "disabled" : "")" asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@Model.Id">
                             <i class="bi bi-cart-plus"></i> Ajouter au panier (Prix @Model.Price TND)
                         </a>
+                        }
                         <a class="btn btn-outline-primary float-right" asp-controller="Movies" asp-action="Index">Revenir</a>
                     </div>
                 </div>
