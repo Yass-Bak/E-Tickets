@@ -16,20 +16,3 @@ html {
 body {
   margin-bottom: 60px;
 }
-
-rating {
-    unicode-bidi: bidi-override;
-    direction: rtl;
-}
-
-star {
-    display: inline-block;
-    font-size: 20px;
-    color: #ccc;
-    cursor: pointer;
-}
-
-    .star:hover,
-    .star.active {
-        color: #ffcc00;
-    }
