@@ -67,14 +67,14 @@ else
 </div>
 </div>
 </div>*@    
-<div class="row">
+
     @foreach (var item in Model)
     {
-        <div class="px-4">
-            <div class="card mb-4 card-hover">
+        <div class="px-5">
+            <div class="card mb-4 card">
                 <div class="row">
                     <a class="col-12 col-md-12  col-lg-3 bg-cover rounded-start"
-                       style="background-image: url('@item.ImageUrl'); background-size: contain; background-position: center;" href="@item.ImageUrl">
+                       style="background-image: url('@item.ImageUrl'); background-size:  cover; background-position: inherit; width: 300px; height:auto;" href="@item.ImageUrl">
                     </a>
                     <div class="col-lg-9 col-md-12 col-12">
                         <!-- Card Body -->
@@ -137,8 +137,6 @@ else
             </div>
         </div>
     }
-</div>
-
 @{
     try
     {

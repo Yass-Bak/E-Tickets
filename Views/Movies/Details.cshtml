@@ -8,8 +8,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card text-center">
-                <img class="card-img-top mx-auto" src="@Model.ImageUrl" alt="Card image cap" style="width: 50%; height:50% ">
-
+                <img src="@Model.ImageUrl" alt="Card image cap" class="mx-auto d-block card-img-top img-fluid" style="max-width: 500px; max-height: 400px;" />
                 <div class="card-body">
                     <h5 class="card-title">@Model.Name</h5>
                     <p class="card-text">@Model.Description.</p>
@@ -23,7 +22,7 @@
                             <div class="col-md-3">
                                 <div class="flex-column text-center">
                                     <img class="border-info rounded-circle" src="@actor.Actor.ProfilePictureUrl" style="max-width: 50px" />
-                                    <a asp-controller="Actors" asp-action="Details" asp-route-id="@actor.ActorId">@actor.Actor.FullName</a>
+                                    <a class="btn  float-left" asp-controller="Actors" asp-action="Details" asp-route-id="@actor.ActorId">@actor.Actor.FullName</a>
                                 </div>
                             </div>
                         }
