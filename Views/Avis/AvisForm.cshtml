@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewData["Title"] = "View";
+    Layout = "Avis";
+}
+
+<h1>View</h1>
+
+@model Avis
+
+@using (Html.BeginForm("AjouterAvis", "Avis", FormMethod.Post))
+{
+    @Html.HiddenFor(model => model.MovieId)
+
+    <label for="Commentaire">Commentaire :</label>
+    @Html.TextAreaFor(model => model.Commentaire, new { rows = 4, cols = 50 })
+
+    <label for="Note">Note :</label>
+    @Html.DropDownListFor(model => model.Note, Enumerable.Range(1, 5).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
+
+    <input type="submit" value="Ajouter Avis" />
+}

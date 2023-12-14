@@ -1,18 +1,29 @@
-﻿using E_Tickets.Data.Services;
+﻿using E_Tickets.Data;
+using E_Tickets.Data.Services;
+using E_Tickets.Data.ViewModels;
 using E_Tickets.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using System.Linq;
 namespace E_Tickets.Controllers
 {
     public class MoviesController : Controller
     {
         private readonly IMoviesService _service;
-        public MoviesController(IMoviesService service)
+        private readonly IAvisService _avisService;
+        private readonly AppDbContext _context;
+
+        //      public MoviesController(IMoviesService service)
+        //{
+        //	_service = service;
+        //}
+
+        public MoviesController(IMoviesService service, IAvisService avisService)
         {
             _service = service;
-
+            _avisService = avisService;
         }
+
         public async Task<IActionResult> Index()
         {
             // var allMovies = await _context.Movies.Include(n => n.Cinema).ToListAsync();
@@ -23,8 +34,20 @@ namespace E_Tickets.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var movieDetails = await _service.GetMovieByIdAsync(id);
+
+            var avis = await _avisService.GetAllAsync();
+            avis = avis.Where(a => a.MovieId == id).ToList<Avis>();
+
+            // Créer un ViewModel.
+            var vm = new MoviesDetailViewModel()
+            {
+                Movies = movieDetails,
+
+                AvisMovies = (List<Avis>)avis
+            };
+
             if (movieDetails == null) return View("Vide");
-            return View(movieDetails);
+            return View(vm);
         }
         public async Task<IActionResult> Create()
         {
