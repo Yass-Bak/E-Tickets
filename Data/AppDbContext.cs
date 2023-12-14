@@ -34,6 +34,9 @@ namespace E_Tickets.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
-        public DbSet<QRCodeModel> QRCodes { get; set; }
+
+        public DbSet<Avis> Avis { get; set; }
+
+
     }
 }
