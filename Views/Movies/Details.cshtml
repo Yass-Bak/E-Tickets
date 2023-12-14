@@ -1,75 +1,48 @@
-﻿@using E_Tickets.Data.ViewModels;
-
-@model MoviesDetailViewModel
+﻿@* Définir le Model *@
+@model Movie
 @* Définir le data *@
 @{
-    ViewData["Title"] = "Deatil du Film";
+    ViewData["Title"] = "Detail du Film";
 }
-<div class="container">
+<div class="container accordion-body">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card text-center">
-                <img class="card-img-top mx-auto" src="@Model.Movies.ImageUrl" alt="Card image cap" style="width: 50%; height:50% ">
-
+                <img src="@Model.ImageUrl" alt="Card image cap" class="mx-auto d-block card-img-top img-fluid" style="max-width: 500px; max-height: 400px;" />
                 <div class="card-body">
-                    <h5 class="card-title">@Model.Movies.Name</h5>
-                    <p class="card-text">@Model.Movies.Description.</p>
+                    <h5 class="card-title">@Model.Name</h5>
+                    <p class="card-text">@Model.Description.</p>
 
                     <hr />
 
                     <h6 class="mb-3">Acteurs</h6>
                     <div class="row">
-                        @foreach (var actor in Model.Movies.Actors_Movies)
+                        @foreach (var actor in Model.Actors_Movies)
                         {
                             <div class="col-md-3">
                                 <div class="flex-column text-center">
                                     <img class="border-info rounded-circle" src="@actor.Actor.ProfilePictureUrl" style="max-width: 50px" />
-                                    <a asp-controller="Actors" asp-action="Details" asp-route-id="@actor.ActorId">@actor.Actor.FullName</a>
+                                    <a class="btn  float-left" asp-controller="Actors" asp-action="Details" asp-route-id="@actor.ActorId">@actor.Actor.FullName</a>
                                 </div>
                             </div>
                         }
                     </div>
 
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Catégorie: @Model.Movies.MovieCategory</li>
-                        <li class="list-group-item">Date de démarrage: @Model.Movies.StartDate.ToString("dd MMM yy")</li>
-                        <li class="list-group-item">Date de clôture: @Model.Movies.EndDate.ToString("dd MMM yy")</li>
+                        <li class="list-group-item">Catégorie: @Model.MovieCategory</li>
+                        <li class="list-group-item">Date de démarrage: @Model.StartDate.ToString("dd MMM yy")</li>
+                        <li class="list-group-item">Date de clôture: @Model.EndDate.ToString("dd MMM yy")</li>
                     </ul>
 
                     <div class="card-body">
-                        <a class="btn btn-success text-white @((DateTime.Now > Model.Movies.EndDate) ? "disabled" : "")" asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@Model.Movies.Id">
-                            <i class="bi bi-cart-plus"></i> Ajouter au panier (Prix @Model.Movies.Price TND)
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                        {
+                        <a class="btn btn-success text-white @((DateTime.Now > Model.EndDate) ? "disabled" : "")" asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@Model.Id">
+                            <i class="bi bi-cart-plus"></i> Ajouter au panier (Prix @Model.Price TND)
                         </a>
+                        }
                         <a class="btn btn-outline-primary float-right" asp-controller="Movies" asp-action="Index">Revenir</a>
                     </div>
-                    @if (Model.AvisMovies != null && Model.AvisMovies.Any())
-                    {
-                        <table class="table table-striped table-bordered">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">Commentaire</th>
-                                    <th scope="col">Note</th>
-                                    <th scope="col">Date Ajout</th>
-                                    <!-- Add more columns as needed -->
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var avis in Model.AvisMovies)
-                                {
-                                    <tr>
-                                        <td>@avis.Commentaire</td>
-                                        <td>@avis.Note</td>
-                                        <td>@avis.DateAjout.ToString("yyyy-MM-dd HH:mm:ss")</td>
-                                        <!-- Add more cells for additional properties -->
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    }
-                    else
-                    {
-                        <p>No Avis available.</p>
-                    }
                 </div>
             </div>
         </div>
