@@ -46,7 +46,7 @@ namespace E_Tickets.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Actors");
+                    b.ToTable("Actors", (string)null);
                 });
 
             modelBuilder.Entity("E_Tickets.Models.Actor_Movie", b =>
@@ -61,7 +61,7 @@ namespace E_Tickets.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("Actors_Movies");
+                    b.ToTable("Actors_Movies", (string)null);
                 });
 
             modelBuilder.Entity("E_Tickets.Models.ApplicationUser", b =>
@@ -157,7 +157,7 @@ namespace E_Tickets.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cinemas");
+                    b.ToTable("Cinemas", (string)null);
                 });
 
             modelBuilder.Entity("E_Tickets.Models.Movie", b =>
@@ -204,7 +204,7 @@ namespace E_Tickets.Migrations
 
                     b.HasIndex("ProducerID");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 
             modelBuilder.Entity("E_Tickets.Models.Order", b =>
@@ -227,7 +227,7 @@ namespace E_Tickets.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("E_Tickets.Models.OrderItem", b =>
@@ -256,7 +256,7 @@ namespace E_Tickets.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("E_Tickets.Models.Producer", b =>
@@ -282,7 +282,7 @@ namespace E_Tickets.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Producers");
+                    b.ToTable("Producers", (string)null);
                 });
 
             modelBuilder.Entity("E_Tickets.Models.QRCodeModel", b =>
@@ -292,7 +292,7 @@ namespace E_Tickets.Migrations
 
                     b.HasKey("QRCodeText");
 
-                    b.ToTable("QRCodes");
+                    b.ToTable("QRCodes", (string)null);
                 });
 
             modelBuilder.Entity("E_Tickets.Models.ShoppingCartItem", b =>
@@ -317,7 +317,7 @@ namespace E_Tickets.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("ShoppingCartItems");
+                    b.ToTable("ShoppingCartItems", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
