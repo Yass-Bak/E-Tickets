@@ -28,6 +28,10 @@ namespace E_Tickets.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Cinema cinema)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(cinema);
+            }
             var data = await _service.GetAllAsync();
             if (data.Where(x => x.Name == cinema.Name).Count() > 0)
             {
@@ -59,7 +63,10 @@ namespace E_Tickets.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, Cinema cinema)
         {
-
+            if (!ModelState.IsValid)
+            {
+                return View(cinema);
+            }
             await _service.UpdateAsync(id, cinema);
             return RedirectToAction(nameof(Index));
         }

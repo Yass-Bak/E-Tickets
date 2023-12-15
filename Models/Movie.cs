@@ -23,13 +23,13 @@ namespace E_Tickets.Models
         public DateTime EndDate { get; set; }
         [Display(Name = "Catégorie")]
         public MovieCategory MovieCategory { get; set; }
-        public List<Actor_Movie> Actors_Movies { get; set; }
+        public virtual List<Actor_Movie> Actors_Movies { get; set; }
         public int CinemaID { get; set; }
         [ForeignKey("CinemaID")]
-        public Cinema Cinema { get; set; }
+        public virtual Cinema Cinema { get; set; }
         public int ProducerID { get; set; }
         [ForeignKey("ProducerID")]
-        public Producer Producer { get; set; }
+        public virtual Producer Producer { get; set; }
 
 
 

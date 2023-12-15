@@ -20,7 +20,7 @@ namespace E_Tickets.Models
         [Required(ErrorMessage = "Il est obligatoire de saisir la Description")]
         [StringLength(10000, MinimumLength = 5, ErrorMessage = "Taille Minimum 5 caractéres")]
         public string Description { get; set; }
-        public List<Movie> Movies { get; set; }
+        public virtual List<Movie>? Movies { get; set; }
 
     }
 }

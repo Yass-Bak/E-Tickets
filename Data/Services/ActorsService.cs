@@ -7,7 +7,9 @@ namespace E_Tickets.Data.Services
     {
         public ActorsService(AppDbContext context) : base(context)
         {
+
         }
+
 
     }
 }

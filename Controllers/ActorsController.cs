@@ -26,10 +26,10 @@ namespace eTickets.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Actor actor)
         {
-            /*if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(actor);
-            }*/
+            }
             var data = await _service.GetAllAsync();
             if (data.Where(x => x.FullName == actor.FullName).Count() > 0)
             {
@@ -58,6 +58,10 @@ namespace eTickets.Controllers
         [HttpPost, ActionName("Edit")]
         public async Task<IActionResult> Edit(int id, Actor actor)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(actor);
+            }
 
             if (id == actor.Id)
             {

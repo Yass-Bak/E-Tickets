@@ -6,7 +6,7 @@ namespace E_Tickets.Models
     {
         [Key]
         public int id { get; set; }
-        public Movie Movie { get; set; }
+        public virtual Movie Movie { get; set; }
         public int Amount { get; set; }
         public String ShoppingCartId { get; set; }
     }

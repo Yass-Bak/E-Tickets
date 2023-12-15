@@ -18,6 +18,6 @@ namespace E_Tickets.Models
         [Required(ErrorMessage = "Il est obligatoire de saisir Bio")]
         [StringLength(10000, MinimumLength = 5, ErrorMessage = "Taille Minimum 5 caractéres")]
         public string Bio { get; set; }
-        public List<Actor_Movie> Actors_Movies { get; set; }
+        public virtual List<Actor_Movie> Actors_Movies { get; set; } = new List<Actor_Movie>();
     }
 }
